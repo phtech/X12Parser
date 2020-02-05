@@ -53,12 +53,12 @@ namespace OopFactory.X12.Hipaa.Tests.Unit.Claims
         public void X12ToHcfaPdfTest()
         {
             Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("OopFactory.X12.Hipaa.Tests.Unit.Claims.TestData.ProfessionalClaim1.txt");
-
+            Console.WriteLine(Assembly.GetExecutingAssembly().FullName);
             // new up a ClaimTransformationService object
             var service = new ClaimFormTransformationService(
-				new ProfessionalClaimToHcfa1500FormTransformation(@"..\..\..\tests\OopFactory.X12.Hipaa.Tests.Unit\Claims\Images\HCFA1500_Red.gif"),
-				new InstitutionalClaimToUB04ClaimFormTransformation(@"..\..\..\tests\OopFactory.X12.Hipaa.Tests.Unit\Claims\Images\UB04_Red.gif"),
-				new ProfessionalClaimToHcfa1500FormTransformation(@"..\..\..\tests\OopFactory.X12.Hipaa.Tests.Unit\Claims\Images\HCFA1500_Red.gif")
+				new ProfessionalClaimToHcfa1500FormTransformation(   $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Claims/TestData/Images/HCFA1500_Red.gif"),
+				new InstitutionalClaimToUB04ClaimFormTransformation($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Claims/TestData/Images/UB04_Red.gif"),
+				new ProfessionalClaimToHcfa1500FormTransformation($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Claims/TestData/Images/HCFA1500_Red.gif")
                 );
 
             ClaimDocument document = service.Transform837ToClaimDocument(stream);
@@ -81,7 +81,7 @@ namespace OopFactory.X12.Hipaa.Tests.Unit.Claims
             Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("OopFactory.X12.Hipaa.Tests.Unit.Claims.TestData.InstitutionalClaim5010.txt");
 
 			
-            var transformation = new InstitutionalClaimToUB04ClaimFormTransformation(@"..\..\..\tests\OopFactory.X12.Hipaa.Tests.Unit\Claims\Images\UB04_Red.gif");
+            var transformation = new InstitutionalClaimToUB04ClaimFormTransformation($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Claims/TestData/Images/UB04_Red.gif");
                 
             // new up a ClaimTransformationService object
             var service = new ClaimFormTransformationService(transformation, transformation, transformation); 
@@ -105,7 +105,7 @@ namespace OopFactory.X12.Hipaa.Tests.Unit.Claims
         {
             Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("OopFactory.X12.Hipaa.Tests.Unit.Claims.TestData.InstitutionalClaim5010.txt");
 
-			var transformation = new InstitutionalClaimToUB04ClaimFormTransformation(@"..\..\..\tests\OopFactory.X12.Hipaa.Tests.Unit\Claims\Images\UB04_Red.gif");
+			var transformation = new InstitutionalClaimToUB04ClaimFormTransformation($"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}/Claims/TestData/Images/UB04_Red.gif");
             
             
             // new up a ClaimTransformationService object
@@ -122,6 +122,9 @@ namespace OopFactory.X12.Hipaa.Tests.Unit.Claims
 
 #if DEBUG
             var driver = Fonet.FonetDriver.Make();
+
+            if (!Directory.Exists("c:\\Temp\\Pdfs"))
+                Directory.CreateDirectory("c:\\Temp\\Pdfs");
 
             FileStream outputFile = new FileStream("c:\\Temp\\Pdfs\\InstitutionalClaim5010.pdf", FileMode.Create, FileAccess.Write);
             driver.Render(foDocument, outputFile);

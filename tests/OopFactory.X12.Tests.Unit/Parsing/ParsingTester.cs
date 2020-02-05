@@ -45,126 +45,126 @@ namespace OopFactory.X12.Tests.Unit.Parsing
             return Assembly.GetExecutingAssembly().GetManifestResourceStream("OopFactory.X12.Tests.Unit.Parsing._SampleEdiFiles." + resourcePath);
         }
 
-        private string GetXPathQuery(int index)
-        {
-            if (TestContext.DataRow.Table.Columns.Contains(String.Format("Query{0}", index)))
-                return Convert.ToString(TestContext.DataRow[String.Format("Query{0}", index)]);
-            else
-                return null;
-        }
+        //private string GetXPathQuery(int index)
+        //{
+        //    if (TestContext.DataRow.Table.Columns.Contains(String.Format("Query{0}", index)))
+        //        return Convert.ToString(TestContext.DataRow[String.Format("Query{0}", index)]);
+        //    else
+        //        return null;
+        //}
 
-        private string GetExpectedValue(int index)
-        {
-            if (TestContext.DataRow.Table.Columns.Contains(String.Format("Expected{0}", index)))
-                return Convert.ToString(TestContext.DataRow[String.Format("Expected{0}", index)]);
-            else
-                return null;
-        }
+        //private string GetExpectedValue(int index)
+        //{
+        //    if (TestContext.DataRow.Table.Columns.Contains(String.Format("Expected{0}", index)))
+        //        return Convert.ToString(TestContext.DataRow[String.Format("Expected{0}", index)]);
+        //    else
+        //        return null;
+        //}
 
-        [DeploymentItem("tests\\OopFactory.X12.Tests.Unit\\Parsing\\_SampleEdiFiles\\SampleEdiFileInventory.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\SampleEdiFileInventory.xml", "EdiFile", DataAccessMethod.Sequential)]
-        [TestMethod]
-        public void ParseToXml()
-        {
-            string resourcePath = Convert.ToString(TestContext.DataRow["ResourcePath"]);
-            Trace.WriteLine(resourcePath);
-            Stream stream = GetEdi(resourcePath);
+//        [DeploymentItem("tests\\OopFactory.X12.Tests.Unit\\Parsing\\_SampleEdiFiles\\SampleEdiFileInventory.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\SampleEdiFileInventory.xml", "EdiFile", DataAccessMethod.Sequential)]
+//        [TestMethod]
+//        public void ParseToXml()
+//        {
+//            string resourcePath = Convert.ToString(TestContext.DataRow["ResourcePath"]);
+//            Trace.WriteLine(resourcePath);
+//            Stream stream = GetEdi(resourcePath);
 
-            X12Parser parser = new X12Parser();
-            Interchange interchange = parser.ParseMultiple(stream).First();
-            string xml = interchange.Serialize();
-#if DEBUG
-            new FileStream(resourcePath.Replace(".txt", ".xml"), FileMode.Create).PrintToFile(xml);
-#endif
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-            int index = 1;
-            string query = GetXPathQuery(index);
-            while (!string.IsNullOrWhiteSpace(query))
-            {
-                string expected = GetExpectedValue(index);
-                XmlNode node = doc.SelectSingleNode((string)query);
-                Assert.IsNotNull(node, "Query '{0}' not found in {1}.", query, resourcePath);
-                Assert.AreEqual(expected, node.InnerText, "Value {0} not expected from query {1} in {2}.", node.InnerText, query, resourcePath);
-                Trace.WriteLine(String.Format("Query '{0}' succeeded.", query));
-                query = GetXPathQuery(++index);
-            }
+//            X12Parser parser = new X12Parser();
+//            Interchange interchange = parser.ParseMultiple(stream).First();
+//            string xml = interchange.Serialize();
+//#if DEBUG
+//            new FileStream(resourcePath.Replace(".txt", ".xml"), FileMode.Create).PrintToFile(xml);
+//#endif
+//            XmlDocument doc = new XmlDocument();
+//            doc.LoadXml(xml);
+//            int index = 1;
+//            string query = GetXPathQuery(index);
+//            while (!string.IsNullOrWhiteSpace(query))
+//            {
+//                string expected = GetExpectedValue(index);
+//                XmlNode node = doc.SelectSingleNode((string)query);
+//                Assert.IsNotNull(node, "Query '{0}' not found in {1}.", query, resourcePath);
+//                Assert.AreEqual(expected, node.InnerText, "Value {0} not expected from query {1} in {2}.", node.InnerText, query, resourcePath);
+//                Trace.WriteLine(String.Format("Query '{0}' succeeded.", query));
+//                query = GetXPathQuery(++index);
+//            }
 
-            if (resourcePath.Contains("_837D"))
-            {
-                stream = GetEdi(resourcePath);
-                parser = new X12Parser(new DentalClaimSpecificationFinder());
-                interchange = parser.ParseMultiple(stream).First();
-                xml = interchange.Serialize();
-#if DEBUG
-            new FileStream(resourcePath.Replace(".txt", "_837D.xml"), FileMode.Create).PrintToFile(xml);
-#endif
-            }
+//            if (resourcePath.Contains("_837D"))
+//            {
+//                stream = GetEdi(resourcePath);
+//                parser = new X12Parser(new DentalClaimSpecificationFinder());
+//                interchange = parser.ParseMultiple(stream).First();
+//                xml = interchange.Serialize();
+//#if DEBUG
+//            new FileStream(resourcePath.Replace(".txt", "_837D.xml"), FileMode.Create).PrintToFile(xml);
+//#endif
+//            }
 
-            if (resourcePath.Contains("_837I"))
-            {
-                stream = GetEdi(resourcePath);
-                parser = new X12Parser(new InstitutionalClaimSpecificationFinder());
-                interchange = parser.ParseMultiple(stream).First();
-                xml = interchange.Serialize();
-#if DEBUG
-            new FileStream(resourcePath.Replace(".txt", "_837I.xml"), FileMode.Create).PrintToFile(xml);
-#endif
-            }
-        }
+//            if (resourcePath.Contains("_837I"))
+//            {
+//                stream = GetEdi(resourcePath);
+//                parser = new X12Parser(new InstitutionalClaimSpecificationFinder());
+//                interchange = parser.ParseMultiple(stream).First();
+//                xml = interchange.Serialize();
+//#if DEBUG
+//            new FileStream(resourcePath.Replace(".txt", "_837I.xml"), FileMode.Create).PrintToFile(xml);
+//#endif
+//            }
+//        }
 
-        [DeploymentItem("tests\\OopFactory.X12.Tests.Unit\\Parsing\\_SampleEdiFiles\\SampleEdiFileInventory.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\SampleEdiFileInventory.xml", "EdiFile", DataAccessMethod.Sequential)]
-        [TestMethod]
-        public void ParseAndUnparse()
-        {
-            string resourcePath = Convert.ToString(TestContext.DataRow["ResourcePath"]);
-            Trace.WriteLine(resourcePath);
-            Stream stream = GetEdi(resourcePath);
-            string orignalX12 = new StreamReader(stream).ReadToEnd();
-            stream = GetEdi(resourcePath);
-            var parser = new X12Parser();
-            parser.ParserWarning += new X12Parser.X12ParserWarningEventHandler(parser_ParserWarning);
-            List<Interchange> interchanges = parser.ParseMultiple(stream);
+        //[DeploymentItem("tests\\OopFactory.X12.Tests.Unit\\Parsing\\_SampleEdiFiles\\SampleEdiFileInventory.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\SampleEdiFileInventory.xml", "EdiFile", DataAccessMethod.Sequential)]
+        //[TestMethod]
+        //public void ParseAndUnparse()
+        //{
+        //    string resourcePath = Convert.ToString(TestContext.DataRow["ResourcePath"]);
+        //    Trace.WriteLine(resourcePath);
+        //    Stream stream = GetEdi(resourcePath);
+        //    string orignalX12 = new StreamReader(stream).ReadToEnd();
+        //    stream = GetEdi(resourcePath);
+        //    var parser = new X12Parser();
+        //    parser.ParserWarning += new X12Parser.X12ParserWarningEventHandler(parser_ParserWarning);
+        //    List<Interchange> interchanges = parser.ParseMultiple(stream);
 
-            if (resourcePath.Contains("_811"))
-                Trace.Write("");
+        //    if (resourcePath.Contains("_811"))
+        //        Trace.Write("");
 
-            StringBuilder x12 = new StringBuilder();
-            foreach (var interchange in interchanges)
-                x12.AppendLine(interchange.SerializeToX12(true));
+        //    StringBuilder x12 = new StringBuilder();
+        //    foreach (var interchange in interchanges)
+        //        x12.AppendLine(interchange.SerializeToX12(true));
 
-            Assert.AreEqual(orignalX12, x12.ToString().Trim());
-            Trace.Write(x12.ToString());
-        }
+        //    Assert.AreEqual(orignalX12, x12.ToString().Trim());
+        //    Trace.Write(x12.ToString());
+        //}
 
         void parser_ParserWarning(object sender, X12ParserWarningEventArgs args)
         {
             Trace.Write(args.Message);
         }
 
-        [DeploymentItem("tests\\OopFactory.X12.Tests.Unit\\Parsing\\_SampleEdiFiles\\SampleEdiFileInventory.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\SampleEdiFileInventory.xml", "EdiFile", DataAccessMethod.Sequential)]
-        [TestMethod]
-        public void ParseAndTransformToX12()
-        {
-            string resourcePath = Convert.ToString(TestContext.DataRow["ResourcePath"]);  // "INS._837P._4010.Spec_4.1.1_PatientIsSubscriber.txt";
-            if (!resourcePath.Contains("_0x1D"))
-            {
-                Trace.WriteLine(resourcePath);
-                Stream stream = GetEdi(resourcePath);
+        //[DeploymentItem("tests\\OopFactory.X12.Tests.Unit\\Parsing\\_SampleEdiFiles\\SampleEdiFileInventory.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\SampleEdiFileInventory.xml", "EdiFile", DataAccessMethod.Sequential)]
+        //[TestMethod]
+        //public void ParseAndTransformToX12()
+        //{
+        //    string resourcePath = Convert.ToString(TestContext.DataRow["ResourcePath"]);  // "INS._837P._4010.Spec_4.1.1_PatientIsSubscriber.txt";
+        //    if (!resourcePath.Contains("_0x1D"))
+        //    {
+        //        Trace.WriteLine(resourcePath);
+        //        Stream stream = GetEdi(resourcePath);
 
-                var parser = new X12Parser();
-                Interchange interchange = parser.ParseMultiple(stream).First();
-                string originalX12 = interchange.SerializeToX12(true);
+        //        var parser = new X12Parser();
+        //        Interchange interchange = parser.ParseMultiple(stream).First();
+        //        string originalX12 = interchange.SerializeToX12(true);
 
-                string xml = interchange.Serialize();
-                string x12 = parser.TransformToX12(xml);
+        //        string xml = interchange.Serialize();
+        //        string x12 = parser.TransformToX12(xml);
 
-                Interchange newInterchange = parser.ParseMultiple(x12).First();
-                string newX12 = newInterchange.SerializeToX12(true);
+        //        Interchange newInterchange = parser.ParseMultiple(x12).First();
+        //        string newX12 = newInterchange.SerializeToX12(true);
 
-                Assert.AreEqual(originalX12, newX12);
-                Trace.Write(x12);
-            }
-        }
+        //        Assert.AreEqual(originalX12, newX12);
+        //        Trace.Write(x12);
+        //    }
+        //}
 
         [TestMethod]
         public void ParseModifyAndTransformBackToX12()
@@ -209,24 +209,24 @@ namespace OopFactory.X12.Tests.Unit.Parsing
             
         }
 
-        [DeploymentItem("tests\\OopFactory.X12.Tests.Unit\\Parsing\\_SampleEdiFiles\\SampleEdiFileInventory.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\SampleEdiFileInventory.xml", "EdiFile", DataAccessMethod.Sequential)]
-        [TestMethod]
-        public void ParseToHtml()
-        {
-            string resourcePath = Convert.ToString(TestContext.DataRow["ResourcePath"]);
-            Trace.WriteLine(resourcePath);
-            Stream stream = GetEdi(resourcePath);
-            if (!resourcePath.Contains("MultipleInterchanges"))
-            {
-                var service = new X12HtmlTransformationService(new X12EdiParsingService(false));
-                string html = service.Transform(new StreamReader(stream).ReadToEnd());
+//        [DeploymentItem("tests\\OopFactory.X12.Tests.Unit\\Parsing\\_SampleEdiFiles\\SampleEdiFileInventory.xml"), DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "|DataDirectory|\\SampleEdiFileInventory.xml", "EdiFile", DataAccessMethod.Sequential)]
+//        [TestMethod]
+//        public void ParseToHtml()
+//        {
+//            string resourcePath = Convert.ToString(TestContext.DataRow["ResourcePath"]);
+//            Trace.WriteLine(resourcePath);
+//            Stream stream = GetEdi(resourcePath);
+//            if (!resourcePath.Contains("MultipleInterchanges"))
+//            {
+//                var service = new X12HtmlTransformationService(new X12EdiParsingService(false));
+//                string html = service.Transform(new StreamReader(stream).ReadToEnd());
 
-                Trace.Write(html);
-#if DEBUG
-                new FileStream(resourcePath.Replace(".txt", ".htm"), FileMode.Create).PrintHtmlToFile(html);
-#endif
-            }
-        }
+//                Trace.Write(html);
+//#if DEBUG
+//                new FileStream(resourcePath.Replace(".txt", ".htm"), FileMode.Create).PrintHtmlToFile(html);
+//#endif
+//            }
+//        }
 
         [TestMethod, Ignore]
         public void CreateTestFile()
