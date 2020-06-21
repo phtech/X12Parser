@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <OutputType>Library</OutputType>
     <SccProjectName>%24/x12parser/trunk/src/OopFactory.X12</SccProjectName>
     <SccLocalPath>.</SccLocalPath>

@@ -209,7 +209,7 @@ IEA*1*000000031~";
             }
             catch (ElementValidationException exc)
             {
-                Assert.AreEqual("Element NM1 cannot contain the value 'AB~CD' with the segment terminator.\r\nParameter name: NM1", exc.Message);
+                Assert.AreEqual("Element NM1 cannot contain the value 'AB~CD' with the segment terminator. (Parameter 'NM1')", exc.Message);
             }
         }
 
@@ -222,7 +222,7 @@ IEA*1*000000031~";
             }
             catch (ElementValidationException exc)
             {
-                Assert.AreEqual("Element NM1 cannot contain the value 'AB~CD' with the segment terminator ~.\r\nParameter name: NM1", exc.Message);
+                Assert.AreEqual("Element NM1 cannot contain the value 'AB~CD' with the segment terminator ~. (Parameter 'NM1')", exc.Message);
             }
         }
 
@@ -235,7 +235,7 @@ IEA*1*000000031~";
             }
             catch (ElementValidationException exc)
             {
-                Assert.AreEqual("Element NM1 cannot contain the value 'AB~CD' with the segment terminator ~. Use a value without delimiters ~ * or :.\r\nParameter name: NM1", exc.Message);
+                Assert.AreEqual("Element NM1 cannot contain the value 'AB~CD' with the segment terminator ~. Use a value without delimiters ~ * or :. (Parameter 'NM1')", exc.Message);
             }
         }
     }
