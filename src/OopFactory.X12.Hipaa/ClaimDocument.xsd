@@ -33,6 +33,7 @@
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Provider" type="tns:Provider" />
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Note" type="tns:Lookup" />
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ServiceLine" type="tns:ServiceLine" />
+      <xs:element minOccurs="0" maxOccurs="1" name="PricingInformation" type="tns:Pricing" />
     </xs:sequence>
     <xs:attribute name="Version" type="xs:string" />
     <xs:attribute name="Type" type="tns:ClaimTypeEnum" use="required" />
@@ -302,6 +303,7 @@
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Note" type="tns:Lookup" />
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Provider" type="tns:Provider" />
       <xs:element minOccurs="0" maxOccurs="unbounded" name="LineAdjustmentInformation" type="tns:LineAdjustmentInformation" />
+      <xs:element minOccurs="0" maxOccurs="1" name="PricingInformation" type="tns:Pricing" />
     </xs:sequence>
     <xs:attribute name="LineNumber" type="xs:int" use="required" />
     <xs:attribute name="RevenueCode" type="xs:string" />

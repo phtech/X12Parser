@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net6.0;net472</TargetFrameworks>
     <OutputType>Library</OutputType>
     <SccProjectName>%24/x12parser/trunk/src/OopFactory.X12</SccProjectName>
     <SccLocalPath>.</SccLocalPath>

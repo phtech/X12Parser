@@ -38,6 +38,7 @@
             HI*BG:13*BG:14~
 			HI*BBR:0B110F5:D8:20050321~
 			HI*BBQ:02139Y3:D8:20050321*BBQ:4A025N8:D8:20050310~
+            HCP*01*11*12*13~
             NM1*71*1*JONES*JOHN*J~
               REF*1G*B99937A~
             NM1*72*1*JONES*JANE*J~
@@ -75,6 +76,7 @@
               CAS*PR*1*7.93~
               CAS*OA*93*15.06**93*15.06*2.2~
   			  NTE*TPO*state regulation 123 was applied during the pricing of thisclaim~
+              HCP*00*1*2*3~
 			  NM1*72*1*JONES*JOHN*J***XX*B99937~
 				PRV*AT*ZZ*363LP0200N~
 

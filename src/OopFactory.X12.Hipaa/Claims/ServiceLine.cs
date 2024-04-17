@@ -141,6 +141,9 @@ namespace OopFactory.X12.Hipaa.Claims
         [XmlElement(ElementName="Note")]
         public List<Lookup> Notes { get; set; }
 
+        [XmlElement(ElementName = "Pricing")]
+        public Pricing PricingInfo { get; set; }
+
         [XmlElement(ElementName = "Provider")]
         public List<Provider> Providers { get; set; }
 
