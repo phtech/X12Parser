@@ -229,6 +229,13 @@ namespace OopFactory.X12.Hipaa.Tests.Unit.Claims
             Assert.AreEqual("N2", claim.Values[13].Code);
             Assert.AreEqual(28.31m, claim.Values[13].Amount);
 
+            //HCP
+            Assert.AreEqual("01", claim.PricingInfo.Code);
+            Assert.AreEqual(11m, claim.PricingInfo.AllowedAmount);
+            Assert.AreEqual(12m, claim.PricingInfo.SavingsAmount);
+            Assert.AreEqual("13", claim.PricingInfo.OrganizationIdentifier);
+
+
             // Box 42 through 49 - Service Lines
 
             Assert.AreEqual(2, claim.ServiceLines.Count, "Unexpected number of service lines.");
@@ -255,6 +262,11 @@ namespace OopFactory.X12.Hipaa.Tests.Unit.Claims
             Assert.AreEqual(DateTime.Parse("1996-9-11"), line.ServiceDateFrom);
             Assert.AreEqual(1, line.Notes.Count);
             Assert.AreEqual("TPO", line.Notes[0].Code);
+
+            Assert.AreEqual("00", line.PricingInfo.Code);
+            Assert.AreEqual(1m, line.PricingInfo.AllowedAmount);
+            Assert.AreEqual(2m, line.PricingInfo.SavingsAmount);
+            Assert.AreEqual("3", line.PricingInfo.OrganizationIdentifier);
 
             Assert.IsNotNull(line.OperatingPhysician);
             Assert.AreEqual("JONES", line.OperatingPhysician.Name.LastName);

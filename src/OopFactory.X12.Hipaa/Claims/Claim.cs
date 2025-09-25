@@ -83,6 +83,9 @@ namespace OopFactory.X12.Hipaa.Claims
         public Entity Payer { get; set; }
         public ClaimMember Patient { get; set; }
 
+        [XmlElement(ElementName = "Pricing")]
+        public Pricing PricingInfo { get; set; }
+
         [XmlElement(ElementName = "OtherSubscriberInformation")]
         public List<OtherSubscriberInformation> OtherSubscriberInformations { get; set; }
 

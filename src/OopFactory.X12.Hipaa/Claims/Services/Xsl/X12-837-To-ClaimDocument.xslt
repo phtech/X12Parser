@@ -181,6 +181,7 @@
       <xsl:apply-templates select="AMT"/>
       <xsl:apply-templates select="REF"/>
       <xsl:apply-templates select="NTE"/>
+      <xsl:apply-templates select="HCP"/>
       <xsl:apply-templates select="HI"/>
       <xsl:apply-templates select="Loop"/>
     </Claim>
@@ -523,6 +524,7 @@
       <xsl:apply-templates select="REF"/>
       <xsl:apply-templates select="AMT"/>
       <xsl:apply-templates select="NTE"/>
+      <xsl:apply-templates select="HCP"/>
       <xsl:apply-templates select="Loop"/>
     </ServiceLine>
   </xsl:template>
@@ -948,6 +950,23 @@
       </xsl:attribute>
       <xsl:value-of select="NTE02"/>
     </Note>
+  </xsl:template>
+
+  <xsl:template match="HCP">
+	  <Pricing>
+		  <xsl:attribute name="Code">
+			  <xsl:value-of select="HCP01"/>
+		  </xsl:attribute>
+		  <xsl:attribute name="AllowedAmount">
+			  <xsl:value-of select="HCP02"/>
+		  </xsl:attribute>
+		  <xsl:attribute name="SavingsAmount">
+			  <xsl:value-of select="HCP03"/>
+		  </xsl:attribute>
+		  <xsl:attribute name="OrganizationIdentifier">
+			  <xsl:value-of select="HCP04"/>
+		  </xsl:attribute>
+	  </Pricing>
   </xsl:template>
 
   <xsl:template match="PRV">

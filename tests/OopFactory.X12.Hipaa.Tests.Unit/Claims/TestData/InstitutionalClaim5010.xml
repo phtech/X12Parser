@@ -396,7 +396,13 @@
                 <HI0202>11</HI0202>
               </HI02>
             </HI>
-            <Loop LoopId="2310A" Name="ATTENDING PHYSICIAN NAME">
+	          <HCP>
+		          <HCP01>01</HCP01>
+		          <HCP02>11</HCP02>
+		          <HCP03>12</HCP03>
+		          <HCP04>13</HCP04>
+	          </HCP>
+	          <Loop LoopId="2310A" Name="ATTENDING PHYSICIAN NAME">
               <NM1>
                 <!--Entity Identifier Code-->
                 <NM101>71</NM101>
@@ -558,6 +564,12 @@
                 <NTE01>TPO</NTE01>
                 <NTE02>state regulation 123 was applied during the pricing of thisclaim</NTE02>
               </NTE>
+	            <HCP>
+		            <HCP01>00</HCP01>
+		            <HCP02>1</HCP02>
+		            <HCP03>2</HCP03>
+		            <HCP04>3</HCP04>
+	            </HCP>
               <Loop LoopId="2420A" Name="OPERATING PHYSICIAN NAME">
                 <NM1>
                   <!--Entity Identifier Code-->
